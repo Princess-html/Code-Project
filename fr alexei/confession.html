@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Purposes</title>
+    <style>
+        /* --- General and Envelope Styling (Same reliable code) --- */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e3f2fd; /* Light Blue Background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .envelope-container {
+            width: 300px;
+            height: 200px;
+            background-color: #bbdefb; /* Pale Blue Envelope */
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease-in-out;
+            border: 3px solid #1976d2; /* Dark Blue Border */
+        }
+
+        .envelope-container:hover {
+            transform: scale(1.05);
+        }
+
+        .message-icon {
+            font-size: 4em;
+            color: #0d47a1; 
+            transition: opacity 0.5s;
+        }
+
+        .hint {
+            margin-top: 15px;
+            font-style: italic;
+            color: #1565c0;
+        }
+
+        .letter-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 550px;
+            text-align: left;
+            opacity: 0;
+            visibility: hidden;
+            max-height: 0;
+            overflow: hidden;
+            margin-top: 20px;
+            transition: opacity 0.8s, max-height 0.8s ease-out, padding 0.8s;
+            border: 1px solid #90caf9;
+        }
+
+        .revealed {
+            opacity: 1;
+            visibility: visible;
+            max-height: 2000px; /* Mas malaki para sa response area */
+            padding: 30px;
+        }
+
+        /* --- Letter and Response Styling --- */
+
+        h2 {
+            color: #3f51b5; /* Indigo */
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+
+        .signature {
+            display: block;
+            text-align: right;
+            font-weight: bold;
+            color: #4527a0; 
+            margin-top: 20px;
+        }
+        
+        /* --- Response Section Styling --- */
+        .response-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px dashed #90caf9;
+            text-align: center;
+        }
+
+        .response-section h3 {
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+
+        #response-text {
+            width: 95%;
+            min-height: 150px;
+            padding: 10px;
+            border: 2px solid #64b5f6;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            resize: vertical;
+        }
+
+        #copy-button {
+            padding: 10px 20px;
+            background-color: #4caf50; /* Green Button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        #copy-button:hover {
+            background-color: #388e3c;
+        }
+
+        #copy-status {
+            margin-top: 10px;
+            color: #4caf50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="envelope-container" id="envelope">
+        <span class="message-icon" id="icon">💌</span>
+    </div>
+    
+    <div class="hint" id="click-hint">Syempre pindutin mo.</div>
+
+    <div class="letter-content" id="letter">
+        <h2>Ah wala to, ano ka ba!</h2>
+        
+        <p>
+            
+            hi, alexeiiii. uhhhh, ilang araw na ako hindi mapakali. i js wanna express my feelings for you, sana hindi ka ma weirdohan sakin or ma awkward. it’s hard to explain but ill try my best.
+
+you became more special to me, and i don’t even know why. you’re someone i confide in, someone who knows me better than most people in my real life. and you always make me laugh.
+
+i’ve realized that my feelings for you have grown into something more than js friendship. i find myself thinking about you more and more, and i can’t help but smile when i see your name pop up on my screen. the way you smile, speak, and laugh makes my world seem beautiful.
+
+i know this sounds crazy because we’ve only been talking for a few days or weeks. and i know this might change things, and im scared sa mangyayari sa friendship natin. i value our connection too much to let this confession ruin it, but i also couldn’t continue pretending that i didn’t feel this way.
+
+i had to be honest with you. but if you don’t, i understand. your happiness is the most important thing to me, and ill respect your feelings, no matter what they are. ill always cherish our friendship, and ill always be here for you. 
+        </p>
+        
+        <span class="signature">— From cute mo na bff :></span>
+
+        <div class="response-section">
+            <h3>Sagutin mo tapos send mo sakin hehe.</h3>
+            <p><strong>After you read this, did you feel awkward?</strong></p>
+            
+            <textarea id="response-text" placeholder="I-type ang sagot mo dito..."></textarea>
+            
+            <button id="copy-button" onclick="copyResponse()">I-copy ang Sagot Ko</button>
+            <div id="copy-status"></div>
+
+            <p style="font-size: 0.9em; margin-top: 20px; color: #546e7a;">
+                **To Send:** After you click "Copy My Answer," paste it into the text message, email, or chat message you are sending me.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function toggleEnvelope() {
+            const letter = document.getElementById('letter');
+            const envelope = document.getElementById('envelope');
+            const hint = document.getElementById('click-hint');
+
+            letter.classList.toggle('revealed');
+
+            if (letter.classList.contains('revealed')) {
+                // Itago ang envelope at hint para makita ang mensahe
+                envelope.style.opacity = '0';
+                envelope.style.pointerEvents = 'none';
+                hint.style.display = 'none';
+            }
+        }
+        
+        function copyResponse() {
+            const responseText = document.getElementById('response-text');
+            const status = document.getElementById('copy-status');
+            
+            responseText.select();
+            responseText.setSelectionRange(0, 99999); // Para sa mobile
+            
+            try {
+                // Copy the text to clipboard
+                navigator.clipboard.writeText(responseText.value);
+                status.textContent = '✅ Na-copy na! Pwede mo na itong i-paste sa message para sa akin.';
+            } catch (err) {
+                // Fallback if the direct copy failed
+                status.textContent = '⚠️ Hindi gumana ang copy. I-highlight na lang po at kopyahin nang mano-mano.';
+            }
+        }
+
+        document.getElementById('envelope').addEventListener('click', toggleEnvelope);
+    </script>
+
+</body>
+</html>
